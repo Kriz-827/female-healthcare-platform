@@ -1,0 +1,26 @@
+// Attach a submit handler to the form
+$("#signup-form").on("submit", function(event) {
+  // Stop the form from submitting the traditional way
+  event.preventDefault();
+
+  // Serialize the form data
+  var formData = $(this).serialize();
+
+  // Submit the form data via AJAX
+  $.ajax({
+    type: "POST",
+    url: "signup.php", // or whatever your server-side script is
+    data: formData,
+    success: function(data) {
+      // If the server-side script returns a success message, hide the form and show a success message
+      if (data === "Success") {
+        $("#signup-form").hide();
+        $("#message").text("You have successfully signed up!");
+      }
+      // If the server-side script returns an error message, show the error message
+      else {
+        $("#message").text(data);
+      }
+    }
+  });
+});
